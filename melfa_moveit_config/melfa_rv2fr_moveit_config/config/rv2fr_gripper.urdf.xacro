@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="rv2fr_gripper">
+    <!-- Arguments -->
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+    <xacro:arg name="use_sim" default="true" />
+    <xacro:arg name="use_fake_hardware" default="false" />
+    <xacro:arg name="sim_gazebo" default="$(arg use_sim)" />
+    <xacro:arg name="use_mock_hardware" default="$(arg use_fake_hardware)" />
+
+    <!-- Import rv2fr urdf file -->
+    <xacro:include filename="$(find melfa_description)/urdf/rv2fr/rv2fr.urdf" />
+
+    <!-- Import control_xacro for robot -->
+    <xacro:include filename="rv2fr.ros2_control.xacro" />
+
+    <!-- Import robotiq_hand_e_gripper macro -->
+    <xacro:include filename="$(find robotiq_description)/urdf/robotiq_hand_e_macro.urdf.xacro"/>
+    
+    <!-- Import gripper ros2_control -->
+    <xacro:include filename="$(find robotiq_description)/urdf/hand_e.ros2_control.xacro"/>
+
+    <!-- Instantiate the Robotiq Hand-E gripper attached to robot TCP -->
+    <xacro:robotiq_hande prefix="" parent="rv2fr_default_tcp">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </xacro:robotiq_hande>
+
+    <!-- Setup robot arm ros2_control -->
+    <xacro:rv2fr_ros2_control 
+        name="FakeSystem" 
+        initial_positions_file="$(arg initial_positions_file)"/>
+
+    <!-- Setup gripper ros2_control -->
+    <xacro:robotiq_hande_ros2_control
+        name="robotiq_hande"
+        prefix=""
+        sim_gazebo="$(arg sim_gazebo)"
+        use_mock_hardware="$(arg use_mock_hardware)" />
+
+</robot>
