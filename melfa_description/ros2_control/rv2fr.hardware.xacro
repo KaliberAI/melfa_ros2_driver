@@ -10,7 +10,7 @@
 
             <xacro:if value="$(arg use_sim)">
                 <hardware>
-                    <plugin>ign_ros2_control/IgnitionSystem</plugin>
+                    <plugin>gz_ros2_control/GazeboSimSystem</plugin>
                 </hardware>
             </xacro:if>
             <xacro:unless value="$(arg use_sim)">

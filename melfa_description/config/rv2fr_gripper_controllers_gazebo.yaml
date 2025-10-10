@@ -187,15 +187,6 @@ robotiq_gripper_controller:
 #   ros__parameters:
 #     default: true
 
-# gripper_mimic_controller:
-#   ros__parameters:
-#     main_joint: "hande_finger_distance"
-#     left_finger_joint: "hande_left_finger_joint"
-#     right_finger_joint: "hande_right_finger_joint"
-#     mimic_multiplier: -0.5
-#     mimic_offset: 0.025
-#     max_finger_position: 0.025
-
 # left_finger_mimic_controller:
 #   ros__parameters:
 #     main_joint: "hande_finger_distance"

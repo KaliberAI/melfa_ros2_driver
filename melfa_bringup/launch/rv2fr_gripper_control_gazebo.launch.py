@@ -321,24 +321,17 @@ def generate_launch_description():
     #     arguments=["robotiq_activation_controller", "-c", "/controller_manager"],
     # )
 
-    # mimic_controller_spawner = Node(
+    # left_finger_mimic_spawner = Node(
     #     package="controller_manager",
     #     executable="spawner",
-    #     arguments=["gripper_mimic_controller", "-c", "/controller_manager"],
+    #     arguments=["left_finger_mimic_controller", "-c", "/controller_manager"],
     # )
 
-
-    left_finger_mimic_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["left_finger_mimic_controller", "-c", "/controller_manager"],
-    )
-
-    right_finger_mimic_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["right_finger_mimic_controller", "-c", "/controller_manager"],
-    )
+    # right_finger_mimic_spawner = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["right_finger_mimic_controller", "-c", "/controller_manager"],
+    # )
 
 
     # Delay rviz start after `joint_state_broadcaster`
@@ -406,7 +399,6 @@ def generate_launch_description():
         gz_sim_bridge,
         gz_spawn_entity,
         robotiq_gripper_controller_spawner,
-        # mimic_controller_spawner,
         # left_finger_mimic_spawner,
         # right_finger_mimic_spawner,
         # robotiq_activation_controller_spawner,
