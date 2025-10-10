@@ -58,6 +58,6 @@ def generate_launch_description():
     
     return LaunchDescription(
         declared_arguments + 
-        move_group_launch.entities +
-        [rviz_node]
+        move_group_launch.entities
+        #[rviz_node]
     )
