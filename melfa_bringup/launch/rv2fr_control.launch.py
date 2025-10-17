@@ -127,7 +127,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             'controller_type',
-            default_value="R",
+            default_value="D",
             description='Select MELFA Controller Type : [R or Q or D]',
         )
     )
@@ -270,12 +270,12 @@ def generate_launch_description():
         arguments=[robot_controller, '-c', '/controller_manager'],
     )
 
-    gpio_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["gpio_controller", "-c", "/controller_manager"],
-        condition=UnlessCondition(use_fake_hardware) or UnlessCondition(use_sim),
-    )
+    # gpio_controller_spawner = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["gpio_controller", "-c", "/controller_manager"],
+    #     condition= UnlessCondition(use_fake_hardware) or UnlessCondition(use_sim),
+    # )
 
     forward_position_controller_spawner = Node(
         package="controller_manager",
@@ -308,6 +308,39 @@ def generate_launch_description():
         )
     )
 
+    # Spawn the gripper controllers
+    robotiq_gripper_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["robotiq_gripper_controller", "-c", "/controller_manager"],
+    )
+
+    # robotiq_activation_controller_spawner = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["robotiq_activation_controller", "-c", "/controller_manager"],
+    # )
+
+    # mimic_controller_spawner = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["gripper_mimic_controller", "-c", "/controller_manager"],
+    # )
+
+
+    left_finger_mimic_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["left_finger_mimic_controller", "-c", "/controller_manager"],
+    )
+
+    right_finger_mimic_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["right_finger_mimic_controller", "-c", "/controller_manager"],
+    )
+
+
     # Delay rviz start after `joint_state_broadcaster`
     delay_rviz_after_joint_state_broadcaster_spawner = RegisterEventHandler(
         event_handler=OnProcessExit(
@@ -332,6 +365,7 @@ def generate_launch_description():
         launch_arguments={"gz_args": ["-r", "-v", "4", "empty.sdf"]}.items(),
         condition=IfCondition(use_sim),
     )
+
     # Make topics available in ROS2
     pkg_project_bringup = get_package_share_directory('melfa_bringup')
     gz_sim_bridge = Node(
@@ -362,7 +396,7 @@ def generate_launch_description():
         control_node,
         robot_state_pub_node,
         joint_state_broadcaster_spawner,
-        gpio_controller_spawner,
+        # gpio_controller_spawner,
         forward_controller_event_handler,
         switch_controller_event_handler,
         delay_rviz_after_joint_state_broadcaster_spawner,
@@ -370,6 +404,11 @@ def generate_launch_description():
         gz_launch_description_with_gui,
         gz_sim_bridge,
         gz_spawn_entity,
+        robotiq_gripper_controller_spawner,
+        # mimic_controller_spawner,
+        # left_finger_mimic_spawner,
+        # right_finger_mimic_spawner,
+        # robotiq_activation_controller_spawner,
     ]
 
     return LaunchDescription(declared_arguments + nodes)
