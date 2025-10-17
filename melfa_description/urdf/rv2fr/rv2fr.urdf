@@ -3,7 +3,15 @@
   <material name="white">
     <color rgba="1.0 1.0 1.0 1.0"/>
   </material>
+  <material name="gray">
+    <color rgba="0.7 0.7 0.7 1.0"/>
+  </material>
+  <material name="dark">
+    <color rgba=".1 0.1 0.1 1.0"/>
+  </material>
+  
   <link name="world"/>
+  
   <link name="rv2fr_base">
     <visual>
       <material name="white"/>
@@ -19,6 +27,7 @@
       </geometry>
     </collision>
   </link>
+  
   <link name="rv2fr_shoulder">
     <visual>
       <material name="white"/>
@@ -34,6 +43,7 @@
       </geometry>
     </collision>
   </link>
+  
   <link name="rv2fr_upper_arm">
     <visual>
       <material name="white"/>
@@ -49,6 +59,7 @@
       </geometry>
     </collision>
   </link>
+  
   <link name="rv2fr_elbow">
     <visual>
       <material name="white"/>
@@ -64,6 +75,7 @@
       </geometry>
     </collision>
   </link>
+  
   <link name="rv2fr_forearm">
     <visual>
       <material name="white"/>
@@ -79,6 +91,7 @@
       </geometry>
     </collision>
   </link>
+  
   <link name="rv2fr_wrist">
     <visual>
       <material name="white"/>
@@ -94,6 +107,7 @@
       </geometry>
     </collision>
   </link>
+  
   <link name="rv2fr_hand_flange">
     <visual>
       <material name="white"/>
@@ -109,12 +123,15 @@
       </geometry>
     </collision>
   </link>
+  
   <link name="rv2fr_default_tcp"/>
+  
   <joint name="rv2fr_world_to_base" type="fixed">
     <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
     <parent link="world"/>
     <child link="rv2fr_base"/>
   </joint>
+  
   <joint name="rv2fr_joint_1" type="revolute">
     <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
     <parent link="rv2fr_base"/>
@@ -122,6 +139,7 @@
     <axis xyz="0 0 1"/>
     <limit effort="1" lower="-4.1887902047863905" upper="4.1887902047863905" velocity="5.235987755982989"/>
   </joint>
+  
   <joint name="rv2fr_joint_2" type="revolute">
     <origin rpy="0 0 0" xyz="0.0 0.0 0.295"/>
     <parent link="rv2fr_shoulder"/>
@@ -129,6 +147,7 @@
     <axis xyz="0 1 0"/>
     <limit effort="1" lower="-2.0943951023931953" upper="2.0943951023931953" velocity="2.6179938779914944"/>
   </joint>
+  
   <joint name="rv2fr_joint_3" type="revolute">
     <origin rpy="0 0 0" xyz="0.0 0.0 0.23"/>
     <parent link="rv2fr_upper_arm"/>
@@ -136,6 +155,7 @@
     <axis xyz="0 1 0"/>
     <limit effort="1" lower="0.0" upper="2.792526803190927" velocity="5.235987755982989"/>
   </joint>
+  
   <joint name="rv2fr_joint_4" type="revolute">
     <origin rpy="0 0 0" xyz="-0.05 0.0 0.0"/>
     <parent link="rv2fr_elbow"/>
@@ -143,6 +163,7 @@
     <axis xyz="0 0 1"/>
     <limit effort="1" lower="-3.490658503988659" upper="3.490658503988659" velocity="7.853981633974483"/>
   </joint>
+  
   <joint name="rv2fr_joint_5" type="revolute">
     <origin rpy="0 0 0" xyz="0.0 0.0 0.27"/>
     <parent link="rv2fr_forearm"/>
@@ -150,6 +171,7 @@
     <axis xyz="0 1 0"/>
     <limit effort="1" lower="-2.0943951023931953" upper="2.0943951023931953" velocity="7.853981633974483"/>
   </joint>
+  
   <joint name="rv2fr_joint_6" type="revolute">
     <origin rpy="0 0 0" xyz="0.0 0.0 0.07"/>
     <parent link="rv2fr_wrist"/>
@@ -157,9 +179,101 @@
     <axis xyz="0 0 1"/>
     <limit effort="1" lower="-6.283185307179586" upper="6.283185307179586" velocity="12.566370614359172"/>
   </joint>
+  
   <joint name="rv2fr_hand_tcp" type="fixed">
     <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
     <parent link="rv2fr_hand_flange"/>
     <child link="rv2fr_default_tcp"/>
+  </joint>
+  
+  <!-- Robotiq Hand-E Gripper -->
+  <link name="hand_e_base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotiq_description/meshes/visual/hande/hand-e.dae" scale="1.0 1.0 1.0"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotiq_description/meshes/collision/hande/hand-e.stl" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="robotiq_hande_base_joint" type="fixed">
+    <parent link="rv2fr_default_tcp"/>
+    <child link="hand_e_base_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  
+  <link name="hande_left_finger">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotiq_description/meshes/visual/hande/left_finger.dae" scale="1.0 1.0 1.0"/>
+      </geometry>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.01 -0.0375 0.014"/>
+      <geometry>
+        <box size="1.0 1.0 1.0"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <link name="hande_right_finger">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotiq_description/meshes/visual/hande/right_finger.dae" scale="1.0 1.0 1.0"/>
+      </geometry>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.01 -0.0375 0.014"/>
+      <geometry>
+        <box size="1.0 1.0 1.0"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <link name="hande_finger_distance_link"/>
+  
+  <joint name="hande_finger_distance" type="prismatic">
+    <axis xyz="1 0 0"/>
+    <parent link="hand_e_base_link"/>
+    <child link="hande_finger_distance_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0.099"/>
+    <limit effort="180" lower="0.0" upper="0.05" velocity="0.15"/>
+  </joint>
+  
+  <joint name="hande_left_finger_joint" type="prismatic">
+    <origin rpy="0 0 0" xyz="0 0 0.099"/>
+    <parent link="hand_e_base_link"/>
+    <child link="hande_left_finger"/>
+    <axis xyz="-1 0 0"/>
+    <limit effort="180" lower="0" upper="0.025" velocity="0.15"/>
+    <mimic joint="hande_finger_distance" multiplier="-0.5" offset="0.025"/>
+  </joint>
+  
+  <joint name="hande_right_finger_joint" type="prismatic">
+    <origin rpy="0 0 0" xyz="0 0 0.099"/>
+    <parent link="hand_e_base_link"/>
+    <child link="hande_right_finger"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="180" lower="0" upper="0.025" velocity="0.15"/>
+    <mimic joint="hande_finger_distance" multiplier="-0.5" offset="0.025"/>
+  </joint>
+  
+  <link name="tcp_link"/>
+  
+  <joint name="tcp_link_joint" type="fixed">
+    <origin rpy="0 0 -1.5707963267948966" xyz="0 0 0.1325"/>
+    <parent link="hand_e_base_link"/>
+    <child link="tcp_link"/>
   </joint>
 </robot>

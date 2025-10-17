@@ -59,6 +59,7 @@ def generate_launch_description():
     # Initialize Moveit Configuration
     moveit_config = (
         MoveItConfigsBuilder("rv2fr", package_name="melfa_rv2fr_moveit_config")
+        .robot_description(file_path="config/rv2fr.urdf.xacro")
         .robot_description_semantic(file_path="config/rv2fr.srdf.xacro")
         .robot_description_kinematics(file_path="config/kinematics.yaml")
         .planning_pipelines(
@@ -77,11 +78,12 @@ def generate_launch_description():
         package="moveit_ros_move_group",
         executable="move_group",
         output="screen",
-        parameters=[moveit_config.to_dict(),
-                    {
+        parameters=[
+            moveit_config.to_dict(),
+            {
                 "use_sim_time": use_sim_time,
-                 },
-                ],
+            },
+        ],
         arguments=["--ros-args", "--log-level", "info"],
     )
 
