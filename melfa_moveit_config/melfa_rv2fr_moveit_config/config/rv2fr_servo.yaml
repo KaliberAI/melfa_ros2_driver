@@ -40,8 +40,8 @@ move_group_name:  rv2fr  # Often 'manipulator' or 'arm'
 planning_frame: rv2fr_base  # The MoveIt planning frame. Often 'base_link' or 'world'
 
 ## Other frames
-ee_frame_name: rv2fr_wrist  # The name of the end effector link, used to return the EE pose
-robot_link_command_frame:  rv2fr_wrist  # commands must be given in the frame of a robot link. Usually either the base or end effector
+ee_frame_name: tcp_link  # The name of the end effector link, used to return the EE pose
+robot_link_command_frame:  tcp_link  # commands must be given in the frame of a robot link. Usually either the base or end effector
 
 ## Stopping behaviour
 incoming_command_timeout:  0.1  # Stop servoing if X seconds elapse without a new command

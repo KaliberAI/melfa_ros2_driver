@@ -28,6 +28,9 @@ controller_manager:
     forward_position_controller:
       type: forward_command_controller/ForwardCommandController
 
+    robotiq_gripper_controller:
+      type: position_controllers/GripperActionController
+
 rv2fr_controller:
   ros__parameters:
     command_interfaces:
@@ -41,12 +44,6 @@ rv2fr_controller:
       - $(var prefix)rv2fr_joint_4
       - $(var prefix)rv2fr_joint_5
       - $(var prefix)rv2fr_joint_6
-      # - rv2fr_joint_1
-      # - rv2fr_joint_2
-      # - rv2fr_joint_3
-      # - rv2fr_joint_4
-      # - rv2fr_joint_5
-      # - rv2fr_joint_6
 
     state_publish_rate: 286.0 # Defaults to 50
     action_monitor_rate: 20.0 # Defaults to 20
@@ -153,11 +150,14 @@ forward_position_controller:
       - $(var prefix)rv2fr_joint_4
       - $(var prefix)rv2fr_joint_5
       - $(var prefix)rv2fr_joint_6
-      # - rv2fr_joint_1
-      # - rv2fr_joint_2
-      # - rv2fr_joint_3
-      # - rv2fr_joint_4
-      # - rv2fr_joint_5
-      # - rv2fr_joint_6
 
     interface_name: position
+
+robotiq_gripper_controller:
+  ros__parameters:
+    default: true
+    joint: hande_finger_distance
+    goal_tolerance: 0.005
+    max_effort: 180.0
+    stall_velocity_threshold: 0.01
+    stall_timeout: 2.0

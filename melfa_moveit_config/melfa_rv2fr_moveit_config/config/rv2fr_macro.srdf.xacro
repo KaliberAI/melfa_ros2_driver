@@ -10,17 +10,22 @@
         <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
         <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
         <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
-       <group name="rv2fr">
-        <joint name="rv2fr_joint_1"/>
-        <joint name="rv2fr_joint_2"/>
-        <joint name="rv2fr_joint_3"/>
-        <joint name="rv2fr_joint_4"/>
-        <joint name="rv2fr_joint_5"/>
-        <joint name="rv2fr_joint_6"/>
-        <joint name="rv2fr_hand_tcp"/>
-        <chain base_link="rv2fr_base" tip_link="rv2fr_default_tcp"/>
+        
+        <!-- Main robot arm group -->
+        <group name="rv2fr">
+            <joint name="rv2fr_joint_1"/>
+            <joint name="rv2fr_joint_2"/>
+            <joint name="rv2fr_joint_3"/>
+            <joint name="rv2fr_joint_4"/>
+            <joint name="rv2fr_joint_5"/>
+            <joint name="rv2fr_joint_6"/>
+            <joint name="rv2fr_hand_tcp"/>
+            <chain base_link="rv2fr_base" tip_link="tcp_link"/>
         </group>
+        
         <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+        
+        <!-- Original arm positions -->
         <group_state name="home" group="rv2fr">
             <joint name="rv2fr_joint_1" value="0"/>
             <joint name="rv2fr_joint_2" value="0"/>
@@ -29,15 +34,10 @@
             <joint name="rv2fr_joint_5" value="1.5708"/>
             <joint name="rv2fr_joint_6" value="0"/>
         </group_state>
-        <group_state name="home_tool" group="rv2fr">
-            <joint name="rv2fr_joint_1" value="0"/>
-            <joint name="rv2fr_joint_2" value="0"/>
-            <joint name="rv2fr_joint_3" value="1.5708"/>
-            <joint name="rv2fr_joint_4" value="0"/>
-            <joint name="rv2fr_joint_5" value="-1.5708"/>
-            <joint name="rv2fr_joint_6" value="0"/>
-        </group_state>
+        
         <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+        
+        <!-- Original robot arm collision disabling -->
         <disable_collisions link1="rv2fr_base" link2="rv2fr_shoulder" reason="Adjacent"/>
         <disable_collisions link1="rv2fr_base" link2="rv2fr_upper_arm" reason="Never"/>
         <disable_collisions link1="rv2fr_elbow" link2="rv2fr_forearm" reason="Adjacent"/>
@@ -52,5 +52,82 @@
         <disable_collisions link1="rv2fr_hand_flange" link2="rv2fr_wrist" reason="Adjacent"/>
         <disable_collisions link1="rv2fr_shoulder" link2="rv2fr_upper_arm" reason="Adjacent"/>
         <disable_collisions link1="rv2fr_upper_arm" link2="rv2fr_wrist" reason="Never"/>
+
+        <disable_collisions link1="rv2fr_base" link2="rv2fr_default_tcp" reason="Never"/>
+        <disable_collisions link1="rv2fr_base" link2="hand_e_base_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_base" link2="hande_finger_distance_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_base" link2="hande_left_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_base" link2="hande_right_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_base" link2="tcp_link" reason="Never"/>
+
+        <disable_collisions link1="rv2fr_shoulder" link2="rv2fr_default_tcp" reason="Never"/>
+        <disable_collisions link1="rv2fr_shoulder" link2="hand_e_base_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_shoulder" link2="hande_finger_distance_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_shoulder" link2="hande_left_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_shoulder" link2="hande_right_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_shoulder" link2="tcp_link" reason="Never"/>
+
+        <!-- Gripper internal collision disabling -->
+        <disable_collisions link1="hand_e_base_link" link2="hande_finger_distance_link" reason="Adjacent"/>
+        <disable_collisions link1="hand_e_base_link" link2="hande_left_finger" reason="Adjacent"/>
+        <disable_collisions link1="hand_e_base_link" link2="hande_right_finger" reason="Adjacent"/>
+        <disable_collisions link1="hande_left_finger" link2="hande_right_finger" reason="Never"/>
+        <disable_collisions link1="hande_left_finger" link2="hande_finger_distance_link" reason="Never"/>
+        <disable_collisions link1="hande_right_finger" link2="hande_finger_distance_link" reason="Never"/>
+
+        <!-- Gripper to arm collision disabling - direct connections -->
+        <disable_collisions link1="rv2fr_hand_flange" link2="rv2fr_default_tcp" reason="Adjacent"/>
+        <disable_collisions link1="rv2fr_default_tcp" link2="hand_e_base_link" reason="Adjacent"/>
+
+        <!-- Wrist to gripper -->
+        <disable_collisions link1="rv2fr_wrist" link2="rv2fr_default_tcp" reason="Never"/>
+        <disable_collisions link1="rv2fr_wrist" link2="hand_e_base_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_wrist" link2="hande_finger_distance_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_wrist" link2="hande_left_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_wrist" link2="hande_right_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_wrist" link2="tcp_link" reason="Never"/>
+
+        <!-- Hand flange to gripper components -->
+        <disable_collisions link1="rv2fr_hand_flange" link2="hand_e_base_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_hand_flange" link2="hande_finger_distance_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_hand_flange" link2="hande_left_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_hand_flange" link2="hande_right_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_hand_flange" link2="tcp_link" reason="Never"/>
+
+        <!-- Default TCP to gripper -->
+        <disable_collisions link1="rv2fr_default_tcp" link2="hande_finger_distance_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_default_tcp" link2="hande_left_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_default_tcp" link2="hande_right_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_default_tcp" link2="tcp_link" reason="Never"/>
+
+        <!-- Forearm to gripper -->
+        <disable_collisions link1="rv2fr_forearm" link2="rv2fr_default_tcp" reason="Never"/>
+        <disable_collisions link1="rv2fr_forearm" link2="hand_e_base_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_forearm" link2="hande_finger_distance_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_forearm" link2="hande_left_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_forearm" link2="hande_right_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_forearm" link2="tcp_link" reason="Never"/>
+
+        <!-- Elbow to gripper -->
+        <disable_collisions link1="rv2fr_elbow" link2="rv2fr_default_tcp" reason="Never"/>
+        <disable_collisions link1="rv2fr_elbow" link2="hand_e_base_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_elbow" link2="hande_finger_distance_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_elbow" link2="hande_left_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_elbow" link2="hande_right_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_elbow" link2="tcp_link" reason="Never"/>
+
+        <!-- Upper arm to gripper -->
+        <disable_collisions link1="rv2fr_upper_arm" link2="rv2fr_default_tcp" reason="Never"/>
+        <disable_collisions link1="rv2fr_upper_arm" link2="hand_e_base_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_upper_arm" link2="hande_finger_distance_link" reason="Never"/>
+        <disable_collisions link1="rv2fr_upper_arm" link2="hande_left_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_upper_arm" link2="hande_right_finger" reason="Never"/>
+        <disable_collisions link1="rv2fr_upper_arm" link2="tcp_link" reason="Never"/>
+
+        <!-- TCP link connections -->
+        <disable_collisions link1="hand_e_base_link" link2="tcp_link" reason="Adjacent"/>
+        <disable_collisions link1="hande_finger_distance_link" link2="tcp_link" reason="Never"/>
+        <disable_collisions link1="hande_left_finger" link2="tcp_link" reason="Never"/>
+        <disable_collisions link1="hande_right_finger" link2="tcp_link" reason="Never"/>
     </xacro:macro>
 </robot>

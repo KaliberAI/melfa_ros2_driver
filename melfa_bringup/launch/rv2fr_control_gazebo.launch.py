@@ -78,7 +78,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             'use_fake_hardware',
-            default_value='true',
+            default_value='false',
             description='Start robot with fake hardware mirroring command to its states.',
         )
     )
@@ -270,13 +270,6 @@ def generate_launch_description():
         arguments=[robot_controller, '-c', '/controller_manager'],
     )
 
-    gpio_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["gpio_controller", "-c", "/controller_manager"],
-        condition=UnlessCondition(use_fake_hardware) or UnlessCondition(use_sim),
-    )
-
     forward_position_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
@@ -306,6 +299,13 @@ def generate_launch_description():
                 switch_controllers
             ]
         )
+    )
+
+    # Spawn the gripper controllers
+    robotiq_gripper_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["robotiq_gripper_controller", "-c", "/controller_manager"],
     )
 
     # Delay rviz start after `joint_state_broadcaster`
@@ -358,11 +358,12 @@ def generate_launch_description():
         condition=IfCondition(use_sim),
     )
 
+    
+
     nodes = [
         control_node,
         robot_state_pub_node,
         joint_state_broadcaster_spawner,
-        gpio_controller_spawner,
         forward_controller_event_handler,
         switch_controller_event_handler,
         delay_rviz_after_joint_state_broadcaster_spawner,
@@ -370,6 +371,7 @@ def generate_launch_description():
         gz_launch_description_with_gui,
         gz_sim_bridge,
         gz_spawn_entity,
+        robotiq_gripper_controller_spawner,
     ]
 
     return LaunchDescription(declared_arguments + nodes)

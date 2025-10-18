@@ -3,7 +3,7 @@
 initial_positions:
   rv2fr_joint_1: 0
   rv2fr_joint_2: 0
-  rv2fr_joint_3: 0
+  rv2fr_joint_3: 1.5708
   rv2fr_joint_4: 0
-  rv2fr_joint_5: 0
+  rv2fr_joint_5: 1.5708
   rv2fr_joint_6: 0
