@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot xmlns:xacro="http://wiki.ros.org/xacro">
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="rv2fr">
 
   <xacro:include filename="$(find melfa_rv2fr_moveit_config)/config/rv2fr_macro.srdf.xacro"/>
 
