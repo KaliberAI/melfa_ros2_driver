@@ -78,7 +78,7 @@
         packet_lost_log="$(arg packet_lost_log)"
     />
 
-    <!-- <xacro:if value="$(arg use_sim)">
+    <xacro:if value="$(arg use_sim)">
         <gazebo reference="world">
         </gazebo>
         <gazebo>
@@ -87,19 +87,6 @@
             <controller_manager_node_name>$(arg prefix)controller_manager</controller_manager_node_name>
         </plugin>
         </gazebo>
-    </xacro:if> -->
-    
-    <xacro:if value="$(arg use_sim)">
-        <!-- Gazebo plugins -->
-        <gazebo reference="world">
-        </gazebo>
-        <gazebo>
-            <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
-                <parameters>$(arg simulation_controllers)</parameters>
-                <controller_manager_node_name>$(arg prefix)controller_manager</controller_manager_node_name>
-            </plugin>
-        </gazebo>
     </xacro:if>
-
 
 </robot>
