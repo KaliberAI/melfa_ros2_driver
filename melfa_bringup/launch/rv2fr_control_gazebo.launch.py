@@ -127,7 +127,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             'controller_type',
-            default_value="R",
+            default_value="D",
             description='Select MELFA Controller Type : [R or Q or D]',
         )
     )
