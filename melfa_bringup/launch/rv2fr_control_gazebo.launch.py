@@ -332,7 +332,9 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             [FindPackageShare("ros_gz_sim"), "/launch/gz_sim.launch.py"]
         ),
-        launch_arguments={"gz_args": ["-r", "-v", "4", os.path.join(pkg_project_bringup, "world", "empty.sdf")]}.items(),
+        launch_arguments={
+            "gz_args": "-r -v 4 " + os.path.join(pkg_project_bringup, "world", "empty.sdf") + " --physics-engine gz-physics-bullet-featherstone-plugin"
+        }.items(),
         condition=IfCondition(use_sim),
     )
 
