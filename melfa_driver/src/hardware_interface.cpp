@@ -81,11 +81,6 @@ MELFAPositionHardwareInterface::on_init(const hardware_interface::HardwareInfo& 
    *
    */
 
-  if (hardware_interface::SystemInterface::on_init(system_info) != hardware_interface::CallbackReturn::SUCCESS)
-  {
-    return hardware_interface::CallbackReturn::ERROR;
-  }
-
   info_ = system_info;
   execution_init_ = true;
 

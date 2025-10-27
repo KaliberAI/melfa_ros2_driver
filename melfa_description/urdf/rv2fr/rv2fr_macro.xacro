@@ -87,13 +87,13 @@
             <material name="white"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/base.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/base.STL"/>
             </geometry>
             </visual>
             <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/base.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/base.STL"/>
             </geometry>
             </collision>
             <xacro:cylinder_inertial radius="0.06" length="0.05" mass="${base_mass}">
@@ -105,13 +105,13 @@
             <material name="white"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/shoulder.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/shoulder.STL"/>
             </geometry>
             </visual>
             <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/shoulder.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/shoulder.STL"/>
             </geometry>
             </collision>
             <xacro:cylinder_inertial radius="0.06" length="0.05" mass="${shoulder_mass}">
@@ -123,13 +123,13 @@
             <material name="white"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/upper_arm.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/upper_arm.STL"/>
             </geometry>
             </visual>
             <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/upper_arm.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/upper_arm.STL"/>
             </geometry>
             </collision>
             <xacro:cylinder_inertial radius="0.06" length="0.05" mass="${upper_arm_mass}">
@@ -141,13 +141,13 @@
             <material name="white"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/elbow.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/elbow.STL"/>
             </geometry>
             </visual>
             <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/elbow.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/elbow.STL"/>
             </geometry>
             </collision>
             <xacro:cylinder_inertial radius="0.06" length="0.05" mass="${elbow_mass}">
@@ -159,13 +159,13 @@
             <material name="white"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/forearm.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/forearm.STL"/>
             </geometry>
             </visual>
             <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/forearm.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/forearm.STL"/>
             </geometry>
             </collision>
             <xacro:cylinder_inertial radius="0.06" length="0.05" mass="${forearm_mass}">
@@ -177,13 +177,13 @@
             <material name="white"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/wrist.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/wrist.STL"/>
             </geometry>
             </visual>
             <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/wrist.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/wrist.STL"/>
             </geometry>
             </collision>
             <xacro:cylinder_inertial radius="0.06" length="0.05" mass="${wrist_mass}">
@@ -195,13 +195,13 @@
             <material name="white"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/hand_flange.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/hand_flange.STL"/>
             </geometry>
             </visual>
             <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://melfa_description/meshes/rv2fr/hand_flange.STL"/>
+                <mesh filename="file://$(find melfa_description)/meshes/rv2fr/hand_flange.STL"/>
             </geometry>
             </collision>
             <xacro:cylinder_inertial radius="0.06" length="0.05" mass="${hand_flange_mass}">

@@ -120,11 +120,12 @@ namespace melfa_io_controllers
                           rclcpp::Publisher<melfa_msgs::msg::GpioState>::SharedPtr &gpio_msg_publisher_)
     {
       gpio_msg.interface_name = io_interface_name;
-      gpio_msg.bitid = static_cast<uint16_t>(state_interfaces_.at(identifier).get_value());
-      gpio_msg.bitmask = static_cast<uint16_t>(state_interfaces_.at(identifier + 1).get_value());
-      gpio_msg.bit_send_type = (state_interfaces_.at(identifier + 2).get_value() == 0) ? "MXT_IO_NULL" : ((state_interfaces_.at(identifier + 2).get_value() == 1) ? "MXT_IO_OUT" : "MXT_IO_IN");
-      gpio_msg.input_data = static_cast<uint16_t>(state_interfaces_.at(identifier + 3).get_value());
-      gpio_msg.output_data = static_cast<uint16_t>(state_interfaces_.at(identifier + 4).get_value());
+      gpio_msg.bitid = static_cast<uint16_t>(state_interfaces_.at(identifier).get_optional().value_or(0.0));
+      gpio_msg.bitmask = static_cast<uint16_t>(state_interfaces_.at(identifier + 1).get_optional().value_or(0.0));
+      double send_type_val = state_interfaces_.at(identifier + 2).get_optional().value_or(0.0);
+      gpio_msg.bit_send_type = (send_type_val == 0) ? "MXT_IO_NULL" : (send_type_val == 1.0 ? "MXT_IO_OUT" : "MXT_IO_IN");
+      gpio_msg.input_data = static_cast<uint16_t>(state_interfaces_.at(identifier + 3).get_optional().value_or(0.0));
+      gpio_msg.output_data = static_cast<uint16_t>(state_interfaces_.at(identifier + 4).get_optional().value_or(0.0));
       gpio_msg_publisher_->publish(gpio_msg);
     };
 
@@ -140,7 +141,7 @@ namespace melfa_io_controllers
 
 
     // Publishes Binary IO Control Mode
-    control_mode_config_ = std::bitset<7>(state_interfaces_.at(GpioIdentifier::control_mode_io).get_value()).to_ulong();
+    control_mode_config_ = std::bitset<7>(state_interfaces_.at(GpioIdentifier::control_mode_io).get_optional().value_or(0.0)).to_ulong();
 
     io_control_mode.hand_io_interface = (control_mode_config_ & 0b0000001) != 0;
     io_control_mode.plc_link_io_interface = (control_mode_config_ & 0b0000010) != 0;
@@ -159,7 +160,7 @@ namespace melfa_io_controllers
       if (!skipReset)
       {
         for (int i = 0; i < 5; ++i)
-          command_interfaces_[identifier + i].set_value(0.0);
+          (void)command_interfaces_[identifier + i].set_value(0.0);
       }
     };
 
@@ -174,7 +175,8 @@ namespace melfa_io_controllers
 
 
 
-    ctrl_type_msg.controller_type = (state_interfaces_.at(GpioIdentifier::ctrl_type).get_value() == 1.0) ? "R" : ((state_interfaces_.at(GpioIdentifier::ctrl_type).get_value() == 2.0) ? "Q" : "D");
+    double ctrl_type_val = state_interfaces_.at(GpioIdentifier::ctrl_type).get_optional().value_or(0.0);
+    ctrl_type_msg.controller_type = (ctrl_type_val == 1.0) ? "R" : (ctrl_type_val == 2.0 ? "Q" : "D");
 
     controller_type_publisher_->publish(ctrl_type_msg);
 
@@ -280,21 +282,21 @@ namespace melfa_io_controllers
 
       if (req->mode == req->SET_WRITE_OUT)
       {
-        command_interfaces_[identifier + 1].set_value(static_cast<double>(req->bitmask & limit_mask_));
-        command_interfaces_[identifier + 2].set_value(1.0);
-        command_interfaces_[identifier + 3].set_value(1.0);
+        (void)command_interfaces_[identifier + 1].set_value(static_cast<double>(req->bitmask & limit_mask_));
+        (void)command_interfaces_[identifier + 2].set_value(1.0);
+        (void)command_interfaces_[identifier + 3].set_value(1.0);
       }
       else if (req->mode == req->SET_READ_OUT)
       {
-        command_interfaces_[identifier + 1].set_value(static_cast<double>(mode_values[1]));
-        command_interfaces_[identifier + 2].set_value(1.0);
-        command_interfaces_[identifier + 3].set_value(1.0);
+        (void)command_interfaces_[identifier + 1].set_value(static_cast<double>(mode_values[1]));
+        (void)command_interfaces_[identifier + 2].set_value(1.0);
+        (void)command_interfaces_[identifier + 3].set_value(1.0);
       }
       else if (req->mode == req->SET_READ_IN)
       {
-        command_interfaces_[identifier + 1].set_value(static_cast<double>(mode_values[2]));
-        command_interfaces_[identifier + 2].set_value(2.0);
-        command_interfaces_[identifier + 3].set_value(0.0);
+        (void)command_interfaces_[identifier + 1].set_value(static_cast<double>(mode_values[2]));
+        (void)command_interfaces_[identifier + 2].set_value(2.0);
+        (void)command_interfaces_[identifier + 3].set_value(0.0);
       }
       else
       {
@@ -306,8 +308,8 @@ namespace melfa_io_controllers
         return;
       }
 
-      command_interfaces_[identifier].set_value(static_cast<double>(req->bitid));
-      command_interfaces_[identifier + 4].set_value(static_cast<double>(req->bitdata));
+      (void)command_interfaces_[identifier].set_value(static_cast<double>(req->bitid));
+      (void)command_interfaces_[identifier + 4].set_value(static_cast<double>(req->bitdata));
     };
 
     if (req->bitid >= ctrl_limits[0] && req->bitid <= ctrl_limits[1])
@@ -383,11 +385,11 @@ namespace melfa_io_controllers
       if (recvType != 3.0 && sendType != 3.0)
       {
 
-        command_interfaces_[identifier].set_value(static_cast<double>(io_cmd_->bitid));
-        command_interfaces_[identifier + 1].set_value(static_cast<double>(io_cmd_->bitmask & limit_mask_));
-        command_interfaces_[identifier + 2].set_value(recvType);
-        command_interfaces_[identifier + 3].set_value(sendType);
-        command_interfaces_[identifier + 4].set_value(static_cast<double>(io_cmd_->bitdata));
+        (void)command_interfaces_[identifier].set_value(static_cast<double>(io_cmd_->bitid));
+        (void)command_interfaces_[identifier + 1].set_value(static_cast<double>(io_cmd_->bitmask & limit_mask_));
+        (void)command_interfaces_[identifier + 2].set_value(recvType);
+        (void)command_interfaces_[identifier + 3].set_value(sendType);
+        (void)command_interfaces_[identifier + 4].set_value(static_cast<double>(io_cmd_->bitdata));
       }
       else
       {
@@ -468,10 +470,13 @@ namespace melfa_io_controllers
 
     int control_mode_int_ = std::bitset<7>(control_mode_binary_).to_ulong();
 
-    res->success = (control_mode_int_ <= 0b1111111) ? (command_interfaces_[GpioIdentifier::control_mode_io].set_value(
-                                                       static_cast<double>(control_mode_int_)),
-                                                   true)
-                                                : false;
+    bool set_result = false;
+    if (control_mode_int_ <= 0b1111111)
+    {
+      set_result = command_interfaces_[GpioIdentifier::control_mode_io].set_value(
+          static_cast<double>(control_mode_int_));
+    }
+    res->success = (control_mode_int_ <= 0b1111111) && set_result;
 
     return res->success;
   }
@@ -487,11 +492,12 @@ namespace melfa_io_controllers
      * @param previous_state lifecycle state object representing state before current state
      * @returns CallbackReturn::SUCCESS if limits are retrieved
      */
-    if (state_interfaces_.at(GpioIdentifier::ctrl_type).get_value() == 1.0)
+    double ctrl_type_val = state_interfaces_.at(GpioIdentifier::ctrl_type).get_optional().value_or(0.0);
+    if (ctrl_type_val == 1.0)
       ctrl_limits = io_limits_["R"].as<std::vector<long int>>();
-    if (state_interfaces_.at(GpioIdentifier::ctrl_type).get_value() == 2.0)
+    if (ctrl_type_val == 2.0)
       ctrl_limits = io_limits_["Q"].as<std::vector<long int>>();
-    if (state_interfaces_.at(GpioIdentifier::ctrl_type).get_value() == 3.0)
+    if (ctrl_type_val == 3.0)
       ctrl_limits = io_limits_["D"].as<std::vector<long int>>();
 
     return LifecycleNodeInterface::CallbackReturn::SUCCESS;
