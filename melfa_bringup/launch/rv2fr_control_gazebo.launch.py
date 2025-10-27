@@ -308,6 +308,20 @@ def generate_launch_description():
         arguments=["robotiq_gripper_controller", "-c", "/controller_manager"],
     )
 
+    # Spawn the left finger mimic controller
+    left_finger_mimic_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["left_finger_mimic_controller", "-c", "/controller_manager"],
+    )
+
+    # Spawn the right finger mimic controller
+    right_finger_mimic_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["right_finger_mimic_controller", "-c", "/controller_manager"],
+    )
+
     # Delay rviz start after `joint_state_broadcaster`
     delay_rviz_after_joint_state_broadcaster_spawner = RegisterEventHandler(
         event_handler=OnProcessExit(
@@ -329,7 +343,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             [FindPackageShare("ros_gz_sim"), "/launch/gz_sim.launch.py"]
         ),
-        launch_arguments={"gz_args": ["-r", "-v", "4", "empty.sdf"]}.items(),
+        launch_arguments={"gz_args": ["-r", "-v", "4", "operate.world"]}.items(),
         condition=IfCondition(use_sim),
     )
     # Make topics available in ROS2
@@ -372,6 +386,8 @@ def generate_launch_description():
         gz_sim_bridge,
         gz_spawn_entity,
         robotiq_gripper_controller_spawner,
+        left_finger_mimic_controller_spawner,
+        right_finger_mimic_controller_spawner,
     ]
 
     return LaunchDescription(declared_arguments + nodes)
