@@ -92,7 +92,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             'start_rviz',
-            default_value='true',
+            default_value='false',
             description='Start RViz2 automatically with this launch file.',
         )
     )
@@ -324,16 +324,18 @@ def generate_launch_description():
         )
     )
 
+    # Make topics available in ROS2
+    pkg_project_bringup = get_package_share_directory('melfa_bringup')
+
     # Gazebo related nodes
     gz_launch_description_with_gui = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [FindPackageShare("ros_gz_sim"), "/launch/gz_sim.launch.py"]
         ),
-        launch_arguments={"gz_args": ["-r", "-v", "4", "empty.sdf"]}.items(),
+        launch_arguments={"gz_args": ["-r", "-v", "4", os.path.join(pkg_project_bringup, "world", "empty.sdf")]}.items(),
         condition=IfCondition(use_sim),
     )
-    # Make topics available in ROS2
-    pkg_project_bringup = get_package_share_directory('melfa_bringup')
+
     gz_sim_bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
