@@ -81,11 +81,6 @@ MELFAPositionHardwareInterface::on_init(const hardware_interface::HardwareInfo& 
    *
    */
 
-  if (hardware_interface::SystemInterface::on_init(system_info) != hardware_interface::CallbackReturn::SUCCESS)
-  {
-    return hardware_interface::CallbackReturn::ERROR;
-  }
-
   info_ = system_info;
   execution_init_ = true;
 
@@ -202,7 +197,7 @@ MELFAPositionHardwareInterface::on_init(const hardware_interface::HardwareInfo& 
 }
 
 hardware_interface::CallbackReturn
-MELFAPositionHardwareInterface::on_activate(const rclcpp_lifecycle::State& previous_state)
+MELFAPositionHardwareInterface::on_activate(const rclcpp_lifecycle::State& )
 {
   /**
    * @brief Activation method for MELFAPositionHardwareInterface class
@@ -361,7 +356,7 @@ MELFAPositionHardwareInterface::on_activate(const rclcpp_lifecycle::State& previ
 }
 
 hardware_interface::CallbackReturn
-MELFAPositionHardwareInterface::on_deactivate(const rclcpp_lifecycle::State& previous_state)
+MELFAPositionHardwareInterface::on_deactivate(const rclcpp_lifecycle::State& )
 {
   /**
    * @brief Deactivation method for MELFAPositionHardwareInterface class
@@ -524,8 +519,8 @@ std::vector<hardware_interface::CommandInterface> MELFAPositionHardwareInterface
   return command_interfaces_;
 }
 
-hardware_interface::return_type MELFAPositionHardwareInterface::read(const rclcpp::Time& time,
-                                                                     const rclcpp::Duration& period)
+hardware_interface::return_type MELFAPositionHardwareInterface::read(const rclcpp::Time& ,
+                                                                     const rclcpp::Duration& )
 {
   /**
    * @brief Read method for MELFAPositionHardwareInterface class
@@ -702,8 +697,8 @@ hardware_interface::return_type MELFAPositionHardwareInterface::read(const rclcp
   return hardware_interface::return_type::OK;
 }
 
-hardware_interface::return_type MELFAPositionHardwareInterface::write(const rclcpp::Time& time,
-                                                                      const rclcpp::Duration& period)
+hardware_interface::return_type MELFAPositionHardwareInterface::write(const rclcpp::Time& ,
+                                                                      const rclcpp::Duration& )
 {
   /**
    * @brief Write method for MELFAPositionHardwareInterface class

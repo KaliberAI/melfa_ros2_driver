@@ -63,16 +63,16 @@ public:
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
   MELFA_HARDWARE_PUBLIC
-  hardware_interface::CallbackReturn on_activate(const rclcpp_lifecycle::State & previous_state) override;
+  hardware_interface::CallbackReturn on_activate(const rclcpp_lifecycle::State & ) override;
 
   MELFA_HARDWARE_PUBLIC
-  hardware_interface::CallbackReturn on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
+  hardware_interface::CallbackReturn on_deactivate(const rclcpp_lifecycle::State & ) override;
 
   MELFA_HARDWARE_PUBLIC
-  hardware_interface::return_type read(const rclcpp::Time& time, const rclcpp::Duration& period) final;
+  hardware_interface::return_type read(const rclcpp::Time& , const rclcpp::Duration& ) final;
 
   MELFA_HARDWARE_PUBLIC
-  hardware_interface::return_type write(const rclcpp::Time& time, const rclcpp::Duration& period) final;
+  hardware_interface::return_type write(const rclcpp::Time& , const rclcpp::Duration& ) final;
 
   std::vector<uint16_t> readIOLimits(const std::string& input);
 
